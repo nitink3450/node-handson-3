@@ -1,0 +1,39 @@
+const express = require("express");
+const app = express();
+const port = 4003;
+
+const middleware1 = (req, res, next) => {
+  console.log("local middleware");
+  next();
+};
+const middleware2 = (req, res, next) => {
+  console.log("Global middleware");
+  next();
+};
+app.use(middleware2);
+
+app.get("/page1", middleware1, (req, res) => {
+  console.log("Page1");
+  res.end("Hi,This is page1");
+});
+app.get("/page2", middleware1, (req, res) => {
+  console.log("Page2");
+  res.end("Hi,This is page2");
+});
+app.get("/page3", (req, res) => {
+  console.log("Page3");
+  res.end("Hi,This is page3");
+});
+app.get("/page4", (req, res) => {
+  console.log("Page4");
+  res.end("Hi,This is page4");
+});
+app.get("/page5", (req, res) => {
+  console.log("Page5");
+  res.end("Hi,This is page5");
+});
+
+app.listen(port, () => {
+  console.log("Port is running on 4003");
+});
+
